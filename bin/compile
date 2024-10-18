@@ -114,6 +114,10 @@ install_python_deps() {
 
     # Ensure pip is installed
     if ! command -v pip &> /dev/null; then
+		# Install pip if it's not found
+		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+        python get-pip.py
+    fi
         error "pip is not installed. Please install pip first."
     fi
 
@@ -154,3 +158,4 @@ install_system_deps
 install_python_deps
 configure_export_env
 ##
+
