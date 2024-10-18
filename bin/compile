@@ -109,6 +109,18 @@ EOF
 	rm -rf $buildpack_tmpdir $build_tmpdir $cache_tmpdir
 }
 
+install_python_deps() {
+    topic "Installing Python Dependencies"
+
+    # Ensure pip is installed
+    if ! command -v pip &> /dev/null; then
+        error "pip is not installed. Please install pip first."
+    fi
+
+    # Install aiohttp
+    pip install aiohttp
+}
+
 configure_export_env() {
     topic "Writing profile script"
     mkdir -p $BUILD_DIR/.profile.d
@@ -139,4 +151,5 @@ export_env_dir() {
 
 export_env_dir "$ENV_DIR" PLAYWRIGHT_BUILDPACK_BROWSERS
 install_system_deps
+install_python_deps
 configure_export_env
